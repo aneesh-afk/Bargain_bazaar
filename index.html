@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BargainBazaar - Shop Smart. Bargain Better.</title>
+    <style>
+        /* ========== GLOBAL STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ========== CONTAINER & CARDS ========== */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* ========== STAKEHOLDER CARDS ========== */
+        .stakeholder-grid {
+            /* Now only showing 2 columns */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stakeholder-card {
+            text-align: center;
+        }
+
+        .stakeholder-card h3 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ========== FORM STYLES ========== */
+        .form-container {
+            max-width: 500px;
+            margin: 3rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #667eea;
+        }
+
+        .form-link a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Message Box */
+        .message-box {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* ========== DASHBOARD STYLES ========== */
+        .dashboard-nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-nav a {
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .dashboard-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* --- ADDED CSS FOR SECTION SWITCHING --- */
+        .dashboard-section {
+            display: none; /* Hide all sections by default */
+        }
+        .dashboard-section.active-dash-section {
+            display: block; /* Show only the active section */
+        }
+        .dashboard-nav a.active-dash-link {
+            background: #343a40; /* Darker color to show selection */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transform: none;
+        }
+        /* --- END ADDED CSS --- */
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .product-card h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0.5rem 0;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .product-actions button {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .buy-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .bargain-btn {
+            background: #764ba2;
+            color: white;
+        }
+
+        .product-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ========== MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        /* ========== LEADERBOARD ========== */
+        .leaderboard {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard h3 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .leaderboard-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .rank {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #667eea;
+            min-width: 40px;
+        }
+
+        .points {
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        /* ========== DELIVERY CARDS / OFFER CARDS (Kept styling generic) ========== */
+        .delivery-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .status-transit {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-delivered {
+            background: #28a745;
+            color: white;
+        }
+
+        /* ========== NOTIFICATION ========== */
+        .notification {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stakeholder-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-nav {
+                flex-direction: column;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* ========== PAGE-SPECIFIC DISPLAY ========== */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="homePage" class="page active">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+                <li><a href="#" onclick="showPage('loginPage')">Login</a></li>
+                <li><a href="#" onclick="showPage('registerPage')">Register</a></li>
+                <li><a href="#" onclick="showPage('aboutPage')">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero">
+            <h1>Shop Smart. Bargain Better.</h1>
+            <p>Join BargainBazaar where customers can bargain with shopkeepers using AI-assisted pricing. Get the best deals while earning rewards!</p>
+            <button class="btn" onclick="showPage('loginPage')">Get Started</button>
+        </div>
+
+        <div class="container">
+            <div class="stakeholder-grid">
+                <div class="card stakeholder-card">
+                    <h3>🛒 Customer</h3>
+                    <p>Browse shops, bargain on products, and earn leaderboard points. Compete with other shoppers and get the best deals through smart negotiations.</p>
+                </div>
+                <div class="card stakeholder-card">
+                    <h3>🏪 Shopkeeper</h3>
+                    <p>Register your shop, upload products with flexible price ranges, and manage incoming bargain offers efficiently.</p>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <div id="loginPage" class="page">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+                <li><a href="#" onclick="showPage('loginPage')">Login</a></li>
+                <li><a href="#" onclick="showPage('registerPage')">Register</a></li>
+                <li><a href="#" onclick="showPage('aboutPage')">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="form-container card">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Login to BargainBazaar</h2>
+            <div id="loginMessage" class="message-box" style="display: none;"></div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="loginRole" required>
+                        <option value="">Select Role</option>
+                        <option value="customer">Customer</option>
+                        <option value="shopkeeper">Shopkeeper</option>
+                        </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+                <div class="form-link">
+                    Don't have an account? <a href="#" onclick="showPage('registerPage')">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerPage" class="page">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+                <li><a href="#" onclick="showPage('loginPage')">Login</a></li>
+                <li><a href="#" onclick="showPage('registerPage')">Register</a></li>
+                <li><a href="#" onclick="showPage('aboutPage')">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="form-container card">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
+             <div id="registerMessage" class="message-box" style="display: none;"></div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regFullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="regRole" required>
+                        <option value="">Select Role</option>
+                        <option value="customer">Customer</option>
+                        <option value="shopkeeper">Shopkeeper</option>
+                        </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Register</button>
+                <div class="form-link">
+                    Already have an account? <a href="#" onclick="showPage('loginPage')">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="customerDashboard" class="page">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('customerDashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="handleLogout()">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;" id="customerWelcome">Welcome, Customer!</h2>
+            
+            <div class="dashboard-nav">
+                <a href="#" onclick="showCustomerSection('customerDashboard', 'browse-products', this)" class="active-dash-link">Browse Products</a>
+                <a href="#" onclick="showCustomerSection('customerDashboard', 'my-cart', this)">My Cart</a>
+                <a href="#" onclick="showCustomerSection('customerDashboard', 'my-wishlist', this)">Wishlist</a>
+                <a href="#" onclick="showCustomerSection('customerDashboard', 'order-history', this)">Order History</a>
+                <a href="#" onclick="showCustomerSection('customerDashboard', 'leaderboard', this)">Leaderboard</a>
+            </div>
+
+            <div class="dashboard-section active-dash-section" id="browse-products-wrapper">
+                <h2 style="color: white; margin-bottom: 1rem;">Available Products</h2>
+                <div class="product-grid" id="productGrid">
+                    <p style="color: white;">Loading products...</p>
+                </div>
+            </div>
+
+            <div class="card dashboard-section" id="my-cart">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">My Shopping Cart</h3>
+                <div id="cartContent"><p>Your cart is empty.</p></div>
+            </div>
+            
+            <div class="card dashboard-section" id="my-wishlist">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">My Wishlist</h3>
+                <div id="wishlistContent"><p>Your wishlist is currently empty.</p></div>
+            </div>
+            
+            <div class="card dashboard-section" id="order-history">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Order History</h3>
+                <div id="orderHistoryContent"><p>No past orders found.</p></div>
+            </div>
+
+            <div class="leaderboard dashboard-section" id="leaderboard"> 
+                <h3>🏆 Top Bargainers Leaderboard</h3>
+                <div id="leaderboardContent">
+                    <p>Loading leaderboard...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shopkeeperDashboard" class="page">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('shopkeeperDashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="handleLogout()">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;" id="shopkeeperWelcome">Welcome, Shopkeeper!</h2>
+            
+            <div class="dashboard-nav">
+                <a href="#" onclick="showDashboardSection('shopkeeperDashboard', 'upload-product', this)" class="active-dash-link">Upload Product</a>
+                <a href="#" onclick="showDashboardSection('shopkeeperDashboard', 'my-offers', this)">Offers</a>
+                <a href="#" onclick="showDashboardSection('shopkeeperDashboard', 'my-products', this)">My Products</a>
+                <a href="#" onclick="showDashboardSection('shopkeeperDashboard', 'my-orders', this)">Orders</a>
+                <a href="#" onclick="showDashboardSection('shopkeeperDashboard', 'sales-stats', this)">Sales Stats</a> 
+            </div>
+
+            <div class="notification" id="shopkeeperNotification">
+                <strong>📢 New Notifications:</strong> Check your offers tab for updates!
+            </div>
+            
+            <div class="card dashboard-section active-dash-section" id="upload-product">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Upload New Product</h3>
+                <div id="uploadMessage" class="message-box" style="display: none;"></div>
+                <form onsubmit="handleProductUpload(event)">
+                    <div class="form-group">
+                        <label>Product ID (Must be unique and numerical, e.g., 501)</label>
+                        <input type="number" id="uploadProductId" placeholder="e.g., 501" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="uploadProductName" placeholder="Enter product name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Standard Price (₹)</label>
+                        <input type="number" id="uploadStandardPrice" placeholder="Enter standard price" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Minimum Price (₹)</label>
+                        <input type="number" id="uploadMinPrice" placeholder="Enter minimum acceptable price" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Maximum Price (₹)</label>
+                        <input type="number" id="uploadMaxPrice" placeholder="Enter maximum price" required>
+                    </div>
+                    <button type="submit" class="btn">Upload Product</button>
+                </form>
+            </div>
+
+            <div class="card dashboard-section" id="my-offers" style="margin-top: 2rem;">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Incoming Bargain Offers</h3>
+                <div id="shopkeeperOffers">
+                    <p>Loading offers...</p>
+                </div>
+            </div>
+            
+            <div class="card dashboard-section" id="my-products" style="margin-top: 2rem;">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">My Listed Products</h3>
+                <div id="sellerProductGrid">
+                    <p>Products will load here when the tab is clicked.</p>
+                </div>
+            </div>
+
+            <div class="card dashboard-section" id="my-orders" style="margin-top: 2rem;">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Customer Orders</h3>
+                <p>Content for viewing and managing orders will go here.</p>
+            </div>
+
+            <div class="card dashboard-section" id="sales-stats" style="margin-top: 2rem;">
+                <h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Product Performance Report (Avg Offer ≥ ₹1000)</h3>
+                <div id="statsContent">
+                    <p>Click on the "Sales Stats" link to load performance data.</p>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <div id="aboutPage" class="page">
+        <nav class="navbar">
+            <div class="logo">BargainBazaar</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+                <li><a href="#" onclick="showPage('loginPage')">Login</a></li>
+                <li><a href="#" onclick="showPage('registerPage')">Register</a></li>
+                <li><a href="#" onclick="showPage('aboutPage')">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <div class="card">
+                <h2 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">About BargainBazaar</h2>
+                
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    <strong>BargainBazaar</strong> is a revolutionary online marketplace that brings the traditional art of bargaining into the digital age. Our platform connects customers and shopkeepers in a seamless ecosystem powered by AI-assisted pricing.
+                </p>
+
+                <h3 style="color: #667eea; margin-top: 2rem; margin-bottom: 1rem;">🎯 Our Mission</h3>
+                <p style="margin-bottom: 1rem; line-height: 1.8;">
+                    To create a fair and transparent marketplace where buyers and sellers can negotiate prices, ensuring both parties get the best value while maintaining healthy business relationships.
+                </p>
+                <h3 style="color: #667eea; margin-top: 2rem; margin-bottom: 1rem;">✨ Key Features</h3>
+                <ul style="margin-bottom: 1rem; line-height: 2;">
+                    <li><strong>AI-Assisted Bargaining:</strong> Our intelligent system helps customers make competitive offers while ensuring shopkeepers stay within their profit margins.</li>
+                    <li><strong>Customer Leaderboard:</strong> Earn points for successful bargains and referrals. Compete with other shoppers and climb the rankings!</li>
+                    <li><strong>Two-Role System:</strong> Separate dashboards and features for Customers and Shopkeepers.</li>
+                    <li><strong>Flexible Price Ranges:</strong> Shopkeepers set their own minimum and maximum price ranges, giving them full control over their margins.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="bargainModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBargainModal()">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; color: #667eea;">Make Your Offer</h3>
+            <div id="bargainProductInfo" style="margin-bottom: 1.5rem;"></div>
+            <div class="form-group">
+                <label>Your Offer Price (₹)</label>
+                <input type="number" id="bargainPrice" placeholder="Enter your offer price">
+            </div>
+            <div id="bargainMessage" class="message-box" style="margin: 1rem 0; display: none;"></div>
+            <button class="btn" onclick="submitBargain()" style="width: 100%;">Submit Offer</button>
+        </div>
+    </div>
+
+    <script>
+    // Set your backend URL
+    const API_BASE_URL = 'http://localhost:3000/api';
+    let currentProduct = {};
+
+    // --- UTILITY FUNCTIONS (Defined FIRST) ---
+
+    function showMessage(elementId, message, type) {
+        const el = document.getElementById(elementId);
+        el.innerHTML = message;
+        el.className = `message-box ${type}`;
+        el.style.display = 'block';
+        setTimeout(() => { el.style.display = 'none'; }, 5000);
+    }
+
+    function getUser() {
+          try {
+            return JSON.parse(localStorage.getItem('currentUser'));
+          } catch (e) {
+            return null;
+          }
+    }
+
+    // --- CUSTOMER DASHBOARD SECTION LOADERS ---
+
+    // Placeholder loaders for Customer sub-sections
+    function loadCustomerCart() {
+        document.getElementById('cartContent').innerHTML = '<p>Your cart is empty. Time to bargain!</p>';
+    }
+
+    function loadCustomerWishlist() {
+        document.getElementById('wishlistContent').innerHTML = '<p>Wishlist loading... (API calls would go here)</p>';
+    }
+
+    // Replace the existing loadOrderHistory() placeholder with this function
+function loadOrderHistory() {
+    const orderHistoryContent = document.getElementById('orderHistoryContent');
+    const currentUser = getUser();
+    
+    if (!currentUser || currentUser.role !== 'customer') return;
+    
+    orderHistoryContent.innerHTML = '<p>Loading order history...</p>';
+
+    fetch(`${API_BASE_URL}/customer/orders/${currentUser.id}`)
+        .then(response => {
+            // Check for non-OK status (like 404 or 500)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(orders => {
+            let ordersHtml = '';
+            if (!Array.isArray(orders) || orders.length === 0) {
+                ordersHtml = '<p>You have not placed any orders yet. Time to start bargaining!</p>';
+            } else {
+                ordersHtml = orders.map(order => `
+                    <div class="delivery-card">
+                        <h4>Order ID: ${order.Order_ID} - ${order.Product_Name}</h4>
+                        <p><strong>Shop:</strong> ${order.ShopkeeperName}</p>
+                        <p><strong>Bargained Price:</strong> ₹${Number(order.Final_Price).toLocaleString('en-IN')}</p>
+                        <p><strong>Standard Price:</strong> ₹${Number(order.Standard_Price).toLocaleString('en-IN')}</p>
+                        <p><strong>Date:</strong> ${new Date(order.Order_Date).toLocaleDateString()}</p>
+                        <span class="status-badge status-delivered">Order Placed/Paid</span>
+                    </div>
+                `).join('');
+            }
+            orderHistoryContent.innerHTML = ordersHtml;
+        })
+        .catch(error => {
+            console.error('Customer Order History Error:', error);
+            orderHistoryContent.innerHTML = `<p style="color:red;">Failed to load order history. Check the new API endpoint definition on the server.</p>`;
+        });
+}
+    
+    // Core Product Loader (used by Customer Dashboard initial load)
+    function loadCustomerProducts() {
+        const productGrid = document.getElementById('productGrid');
+        productGrid.innerHTML = '<p style="color: white;">Loading products...</p>';
+
+        fetch(`${API_BASE_URL}/products`)
+            .then(response => response.json())
+            .then(products => { 
+                productGrid.innerHTML = ''; 
+                if (!Array.isArray(products) || products.length === 0) {
+                     productGrid.innerHTML = '<p style="color:white;">No products currently available. Ask a Shopkeeper to upload one!</p>';
+                     return;
+                }
+
+                products.forEach(product => {
+                    const priceDisplay = Number(product.Standard_Price).toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+
+                    const cardHtml = `
+                        <div class="product-card">
+                            <div class="product-image">🛒</div>
+                            <h4>${product.Product_Name}</h4>
+                            <p style="color: #666; font-size: 0.9rem;">Product ID: ${product.Product_ID}</p>
+                            <div class="price">${priceDisplay}</div>
+                            <div class="product-actions">
+                                <button class="buy-btn">Buy Now</button>
+                                <button class="bargain-btn" 
+                                    onclick="openBargainModal(${product.Product_ID}, '${product.Product_Name.replace(/'/g, "\\'")}', ${product.Standard_Price})">
+                                    Bargain
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productGrid.innerHTML += cardHtml;
+                });
+            })
+            .catch(error => { 
+                console.error('Error loading products:', error);
+                productGrid.innerHTML = '<p style="color:red;">Failed to load products. Check server connection.</p>';
+            });
+    }
+
+    function loadLeaderboard() {
+        const leaderboardContent = document.getElementById('leaderboardContent');
+        leaderboardContent.innerHTML = '<p>Loading leaderboard...</p>';
+
+        fetch(`${API_BASE_URL}/leaderboard`)
+            .then(response => response.json())
+            .then(leaderboard => {
+                let leaderboardHtml = '';
+                if (!Array.isArray(leaderboard) || leaderboard.length === 0) {
+                    leaderboardHtml = '<p>Be the first to secure a deal and make it onto the leaderboard!</p>';
+                } else {
+                    leaderboard.forEach((item, index) => {
+                         leaderboardHtml += `
+                            <div class="leaderboard-item">
+                                <div><span class="rank">${index + 1}.</span> ${item.Name}</div>
+                                <div class="points">${item.Points.toLocaleString('en-IN')} points</div>
+                            </div>
+                        `;
+                    });
+                }
+                leaderboardContent.innerHTML = leaderboardHtml;
+            })
+            .catch(error => {
+                console.error('Leaderboard error:', error);
+                leaderboardContent.innerHTML = '<p style="color:red;">Failed to load leaderboard data.</p>';
+            });
+    }
+    
+    // --- SHOPKEEPER LOADING FUNCTIONS ---
+
+    function loadShopkeeperOffers() {
+        const offerContainer = document.getElementById('shopkeeperOffers');
+        const currentUser = getUser();
+        
+        if (!currentUser || currentUser.role !== 'shopkeeper') return;
+        offerContainer.innerHTML = '<p>Loading offers...</p>';
+
+        fetch(`${API_BASE_URL}/shopkeeper/offers/${currentUser.id}`)
+            .then(response => response.json())
+            .then(offers => {
+                let offersHtml = '';
+                if (offers.length === 0) {
+                    offersHtml = '<p>No pending bargain offers at this time.</p>';
+                } else {
+                    // Inside loadShopkeeperOffers: offers.forEach(offer => { ... })
+                        offers.forEach(offer => {
+                        const statusColor = offer.OfferStatus.includes('Pending') ? '#ffc107' : '#28a745';
+                        const statusTextColor = offer.OfferStatus.includes('Pending') ? '#333' : 'white';
+                        const acceptDisabled = offer.Offered_Price < offer.Min_Price; 
+                        
+                        offersHtml += `
+                            <div class="delivery-card">
+                                <h4>${offer.Product_Name} (ID: ${offer.Product_ID})</h4>
+                                <p><strong>Customer:</strong> ${offer.CustomerName || 'N/A'}</p>
+                                <p><strong>Offer Price:</strong> ₹${Number(offer.Offered_Price).toLocaleString('en-IN')}</p>
+                                <p><strong>Standard Price:</strong> ₹${Number(offer.Standard_Price).toLocaleString('en-IN')}</p>
+                                <p><strong>Your Range:</strong> ₹${Number(offer.Min_Price).toLocaleString('en-IN')} - ₹${Number(offer.Max_Price).toLocaleString('en-IN')}</p>
+                                <span class="status-badge" style="background: ${statusColor}; color: ${statusTextColor};">
+                                    ${acceptDisabled ? 'Below Range' : offer.OfferStatus}
+                                </span>
+                                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                                    
+                                    <button class="btn" style="flex: 1;" 
+                                        ${acceptDisabled || offer.OfferStatus !== 'Pending' ? 'disabled' : ''} 
+                                        onclick="handleAcceptOffer(${offer.Offer_ID})">
+                                        Accept
+                                    </button>
+                                    
+                                    <button class="btn" style="flex: 1; background: #dc3545;" 
+                                        ${offer.Offered_Price < offer.Min_Price || offer.OfferStatus !== 'Pending' ? 'disabled' : ''} 
+                                        onclick="handleRejectOffer(${offer.Offer_ID})">
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                offerContainer.innerHTML = offersHtml;
+            })
+            .catch(error => {
+                console.error('Error loading shopkeeper offers:', error);
+                offerContainer.innerHTML = `<p style="color:red;">Failed to load offers. Check server connection.</p>`;
+            });
+    }
+    
+    async function handleAcceptOffer(offerId) {
+        if (!confirm(`Are you sure you want to accept Offer ID ${offerId}? This will create an order and award points (TCL Demo).`)) {
+            return;
+        }
+        
+        const messageBox = document.getElementById('shopkeeperNotification');
+        messageBox.innerHTML = `<strong>Processing:</strong> Accepting offer ${offerId}...`;
+        messageBox.style.display = 'block';
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/transaction-accept-offer/${offerId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                showMessage('shopkeeperNotification', data.message, 'success');
+                // Reload offers and leaderboard to see changes
+                loadShopkeeperOffers();
+                loadLeaderboard(); 
+            } else {
+                showMessage('shopkeeperNotification', `Transaction Failed: ${data.message}`, 'error');
+            }
+        } catch (error) {
+            console.error('Accept offer error:', error);
+            showMessage('shopkeeperNotification', 'Failed to communicate with server for transaction.', 'error');
+        }
+    }
+
+
+    function loadShopkeeperProducts() {
+        const contentArea = document.getElementById('sellerProductGrid'); 
+        const currentUser = getUser();
+
+        if (!currentUser || currentUser.role !== 'shopkeeper' || !contentArea) {
+             contentArea.innerHTML = '<p style="color:red;">Login error. Cannot load products.</p>';
+             return;
+        }
+
+        contentArea.innerHTML = '<p>LOADING (Attempting Network Call...)</p>';
+
+        const sellerId = parseInt(currentUser.id);
+        
+        fetch(`${API_BASE_URL}/shopkeeper/products/${sellerId}`) 
+            .then(response => response.json())
+            .then(products => {
+                const productList = Array.isArray(products) ? products : [];
+                let productsHtml = ''; 
+                
+                if (productList.length === 0) {
+                    productsHtml = '<p>You have not uploaded any products yet. Use the "Upload Product" tab!</p>';
+                } else {
+                    productsHtml = '<div class="product-grid">';
+
+                    productList.forEach(product => {
+                        const standardPrice = Number(product.Standard_Price || 0);
+                        const minPrice = Number(product.Min_Price || 0);
+                        const priceDisplay = standardPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+                        const minPriceDisplay = minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+
+                        productsHtml += `
+                            <div class="product-card" style="box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);">
+                                <div class="product-image">📦</div>
+                                <h4>${product.Product_Name}</h4>
+                                <p style="color: #666; font-size: 0.9rem;">ID: ${product.Product_ID}</p>
+                                <div class="price">${priceDisplay}</div>
+                                <p style="font-size: 0.8rem; color: #764ba2;">Min Price: ${minPriceDisplay}</p>
+                                <div class="product-actions">
+                                    <button class="buy-btn" style="background: #17a2b8;">Edit</button>
+                                    <button class="bargain-btn" style="background: #dc3545;">Delete</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    productsHtml += '</div>';
+                }
+                
+                contentArea.innerHTML = productsHtml;
+            })
+            .catch(error => {
+                console.error('FETCH FAILURE:', error);
+                contentArea.innerHTML = `<p style="color:red;">❌ FETCH FAILED: See console for details on ${error.message}.</p>`;
+            });
+    }
+
+    // --- PAGE CONTROL FUNCTIONS ---
+
+    // Generic dashboard section switcher (used for both Shopkeeper and Customer)
+    function showDashboardSection(dashboardId, sectionId, clickedLink) {
+        // Find the main content area wrapper based on dashboardId
+        const dashboardWrapper = document.querySelector(`#${dashboardId} .container`);
+        if (!dashboardWrapper) return;
+
+        // 1. Hide all dashboard-section divs inside the container
+        const sections = dashboardWrapper.querySelectorAll('.dashboard-section');
+        sections.forEach(section => section.classList.remove('active-dash-section'));
+
+        // 2. Show the target section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active-dash-section');
+        } else if (sectionId === 'browse-products-wrapper') {
+            // Special case: Activate the primary section container for customer products
+            dashboardWrapper.querySelector('.dashboard-section:first-of-type').classList.add('active-dash-section');
+        }
+        
+        // 3. Update active link styling
+        const navLinks = document.querySelectorAll(`#${dashboardId} .dashboard-nav a`);
+        navLinks.forEach(link => link.classList.remove('active-dash-link'));
+        clickedLink.classList.add('active-dash-link');
+
+        // 4. Load specific content
+        if (sectionId === 'my-offers') {
+            loadShopkeeperOffers();
+        } else if (sectionId === 'my-products') {
+            loadShopkeeperProducts(); 
+        } else if (sectionId === 'my-orders') { 
+            loadShopkeeperOrders();             // <--- CALL THE NEW FUNCTION
+        } else if (sectionId === 'browse-products-wrapper') {
+            loadCustomerProducts(); // Load products for the customer view
+        } else if (sectionId === 'my-cart') {
+            loadCustomerCart();
+        } else if (sectionId === 'my-wishlist') {
+            loadCustomerWishlist();
+        } else if (sectionId === 'sales-stats') { // <--- ADD THIS LINE
+            loadShopkeeperStats();
+        } else if (sectionId === 'order-history') {
+            loadOrderHistory(); // <--- This now calls the updated customer function
+        } else if (sectionId === 'leaderboard') { 
+            loadLeaderboard();
+        }
+    }
+
+    // Customer specific function to handle section switching via click handler
+    function showCustomerSection(dashboardId, targetLinkName, clickedLink) {
+        // Map the link name to the actual section ID, or use the special wrapper ID
+        const sectionIdMap = {
+            'browse-products': 'browse-products-wrapper', // Special wrapper section
+            'my-cart': 'my-cart',
+            'my-wishlist': 'my-wishlist',
+            'order-history': 'order-history',
+            'leaderboard': 'leaderboard' // Use the simpler ID here
+        };
+        
+        // Determine the target ID based on the click
+        const sectionId = sectionIdMap[targetLinkName];
+        if (!sectionId) return;
+
+        // Call the generic switcher
+        showDashboardSection(dashboardId, sectionId, clickedLink);
+    }
+
+
+    function loadCustomerDashboard() {
+        const user = getUser();
+        if (!user) return;
+        
+        // Find the default link (Browse Products) and trigger section loading
+        const defaultLink = document.querySelector('#customerDashboard .dashboard-nav a:first-child');
+        if (defaultLink) {
+             // Pass 'browse-products-wrapper' (the wrapper ID) to activate the section
+             showDashboardSection('customerDashboard', 'browse-products-wrapper', defaultLink);
+        }
+    }
+
+
+    function loadShopkeeperDashboard() {
+        const user = getUser();
+        if (!user) return;
+        
+        document.getElementById('shopkeeperWelcome').innerText = `Welcome, ${user.name}! (ID: ${user.id})`;
+        
+        // Restore default tab to "Upload Product"
+        const defaultLink = document.querySelector('#shopkeeperDashboard .dashboard-nav a:first-child'); 
+        if (defaultLink) {
+            showDashboardSection('shopkeeperDashboard', 'upload-product', defaultLink);
+        }
+    }
+    
+    // --- REST OF PAGE CONTROL ---
+
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0, 0);
+
+        const user = getUser();
+        if (user) {
+            if (pageId === 'customerDashboard') {
+                document.getElementById('customerWelcome').innerText = `Welcome, ${user.name}!`;
+                loadCustomerDashboard();
+            }
+            if (pageId === 'shopkeeperDashboard') {
+                document.getElementById('shopkeeperWelcome').innerText = `Welcome, ${user.name}! (ID: ${user.id})`;
+                loadShopkeeperDashboard(); 
+            }
+            // Removed delivery dashboard check
+        }
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        showPage('homePage');
+    }
+
+    function handleRegister(event) {
+        event.preventDefault();
+        const fullName = document.getElementById('regFullName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        const role = document.getElementById('regRole').value;
+
+        if (password !== confirmPassword) {
+            showMessage('registerMessage', 'Passwords do not match!', 'error');
+            return;
+        }
+
+        showMessage('registerMessage', 'Processing registration...', 'success');
+
+        fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: fullName, email, password, role }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('registerMessage', data.message, 'success');
+                event.target.reset();
+                setTimeout(() => showPage('loginPage'), 2000);
+            } else {
+                showMessage('registerMessage', data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Registration API error:', error);
+            showMessage('registerMessage', 'Registration failed. Check server connection.', 'error');
+        });
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const role = document.getElementById('loginRole').value;
+
+        showMessage('loginMessage', 'Logging in...', 'success');
+
+        fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, role }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('loginMessage', data.message, 'success');
+                // Store user data which now includes id, name, and role from the DB
+                localStorage.setItem('currentUser', JSON.stringify(data.user));
+                
+                if (role === 'customer') showPage('customerDashboard');
+                else if (role === 'shopkeeper') showPage('shopkeeperDashboard');
+                // Removed delivery dashboard showPage
+            } else {
+                showMessage('loginMessage', data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            showMessage('loginMessage', 'An error occurred during login. Ensure the server is running on port 3000.', 'error');
+        });
+    }
+    
+    // ------------------------------------------------------------------
+    // --- START: COMPLETED FUNCTIONS FOR BARGAIN MODAL AND UPLOAD ---
+    // ------------------------------------------------------------------
+
+    function openBargainModal(productId, productName, standardPrice) {
+        currentProduct = { id: productId, name: productName, price: standardPrice };
+        document.getElementById('bargainProductInfo').innerHTML = 
+            `<strong>Product:</strong> ${productName}<br><strong>Standard Price:</strong> ₹${Number(standardPrice).toLocaleString('en-IN')}`;
+        document.getElementById('bargainPrice').value = ''; // Clear previous price
+        document.getElementById('bargainModal').style.display = 'block';
+        document.getElementById('bargainMessage').style.display = 'none';
+    }
+
+    function closeBargainModal() {
+        document.getElementById('bargainModal').style.display = 'none';
+    }
+
+    function submitBargain() {
+        const offeredPrice = document.getElementById('bargainPrice').value;
+        const user = getUser();
+        const messageBox = document.getElementById('bargainMessage');
+
+        if (!user || user.role !== 'customer') {
+            showMessage('bargainMessage', 'Please log in as a customer to submit an offer.', 'error');
+            return;
+        }
+        if (!offeredPrice || isNaN(offeredPrice) || Number(offeredPrice) <= 0) {
+            showMessage('bargainMessage', 'Please enter a valid offer price.', 'error');
+            return;
+        }
+
+        showMessage('bargainMessage', 'Submitting offer...', 'success');
+
+        fetch(`${API_BASE_URL}/bargain`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                customerId: user.id, 
+                productId: currentProduct.id, 
+                offeredPrice: Number(offeredPrice) 
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('bargainMessage', `Offer submitted! Status: ${data.status}. Message: ${data.message}`, 'success');
+                // Keep modal open briefly to show result, then close
+                setTimeout(closeBargainModal, 5000); 
+            } else {
+                showMessage('bargainMessage', `Failed: ${data.message}`, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Bargain submission error:', error);
+            showMessage('bargainMessage', 'Bargain submission failed. Check server connection.', 'error');
+        });
+    }
+
+    // Add this helper function to handle the Edit action (Update)
+async function handleEditProduct(productId) {
+    const newPrice = prompt("Enter the NEW Max Price (Exp 3: Update Demo). Max Price must be a number:");
+    const messageBoxId = 'shopkeeperNotification';
+    const sellerId = getUser().id; // Used to reload the products later
+
+    if (!newPrice || isNaN(newPrice)) {
+        showMessage(messageBoxId, 'Update cancelled or invalid price entered.', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/update-product/${productId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newMaxPrice: parseFloat(newPrice) }),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            showMessage(messageBoxId, data.message, 'success');
+            // Reload the product list to show the change
+            loadShopkeeperProducts();
+        } else {
+            showMessage(messageBoxId, `Update Failed: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Edit API Error:', error);
+        showMessage(messageBoxId, 'Failed to connect to server for product update.', 'error');
+    }
+}
+
+// Add this helper function to handle the Delete action
+async function handleDeleteProduct(productId) {
+    if (!confirm(`Are you sure you want to delete Product ID ${productId}? (Exp 3: Delete Demo)`)) {
+        return;
+    }
+
+    const messageBoxId = 'shopkeeperNotification';
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/shopkeeper/product/${productId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            showMessage(messageBoxId, data.message, 'success');
+            // Reload the product list immediately
+            loadShopkeeperProducts(); 
+        } else {
+            showMessage(messageBoxId, `Deletion Failed: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Delete API Error:', error);
+        showMessage(messageBoxId, 'Failed to connect to server for product deletion.', 'error');
+    }
+}
+
+// Function to fetch and display sales statistics (EXP 6)
+function loadShopkeeperStats() {
+    const statsContent = document.getElementById('statsContent');
+    const currentUser = getUser();
+    
+    if (!currentUser || currentUser.role !== 'shopkeeper') return;
+    
+    statsContent.innerHTML = '<p>Loading sales statistics...</p>';
+
+    fetch(`${API_BASE_URL}/shopkeeper/stats/${currentUser.id}`)
+        .then(response => response.json())
+        .then(stats => {
+            if (!Array.isArray(stats) || stats.length === 0) {
+                statsContent.innerHTML = '<p>No products meet the criteria (Avg Offer Price ≥ ₹1000) yet.</p>';
+                return;
+            }
+
+            let tableHtml = `
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                    <thead style="background: #f8f9fa;">
+                        <tr>
+                            <th style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: left;">Product Name</th>
+                            <th style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">Total Offers</th>
+                            <th style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">Average Offer Price</th>
+                            <th style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">Highest Offer (MAX)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            stats.forEach(stat => {
+                const avgPrice = Number(stat.AvgOfferPrice).toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+                const maxOffer = Number(stat.MaxOffer).toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+                
+                tableHtml += `
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #dee2e6;">${stat.Product_Name}</td>
+                        <td style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">${stat.TotalOffers}</td>
+                        <td style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">${avgPrice}</td>
+                        <td style="padding: 0.75rem; border: 1px solid #dee2e6; text-align: right;">${maxOffer}</td>
+                    </tr>
+                `;
+            });
+
+            tableHtml += '</tbody></table>';
+            statsContent.innerHTML = tableHtml;
+        })
+        .catch(error => {
+            console.error('Stats fetch error:', error);
+            statsContent.innerHTML = '<p style="color:red;">Failed to fetch statistics. Check server connection.</p>';
+        });
+}
+
+// *** REPLACE the existing loadShopkeeperProducts function with this one ***
+function loadShopkeeperProducts() {
+    const contentArea = document.getElementById('sellerProductGrid'); 
+    const currentUser = getUser();
+
+    if (!currentUser || currentUser.role !== 'shopkeeper' || !contentArea) {
+         contentArea.innerHTML = '<p style="color:red;">Login error. Cannot load products.</p>';
+         return;
+    }
+
+    contentArea.innerHTML = '<p>LOADING (Attempting Network Call...)</p>';
+
+    const sellerId = parseInt(currentUser.id);
+    
+    fetch(`${API_BASE_URL}/shopkeeper/products/${sellerId}`) 
+        .then(response => response.json())
+        .then(products => {
+            const productList = Array.isArray(products) ? products : [];
+            let productsHtml = ''; 
+            
+            if (productList.length === 0) {
+                productsHtml = '<p>You have not uploaded any products yet. Use the "Upload Product" tab!</p>';
+            } else {
+                productsHtml = '<div class="product-grid">';
+
+                productList.forEach(product => {
+                    const standardPrice = Number(product.Standard_Price || 0);
+                    const minPrice = Number(product.Min_Price || 0);
+                    const maxPrice = Number(product.Max_Price || 0); // Include Max Price for context
+                    const priceDisplay = standardPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+                    const minPriceDisplay = minPrice.toLocaleString('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 });
+
+                    productsHtml += `
+                        <div class="product-card" style="box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);">
+                            <div class="product-image">📦</div>
+                            <h4>${product.Product_Name}</h4>
+                            <p style="color: #666; font-size: 0.9rem;">ID: ${product.Product_ID}</p>
+                            <div class="price">${priceDisplay}</div>
+                            <p style="font-size: 0.8rem; color: #764ba2;">Min Price: ${minPriceDisplay}</p>
+                            <p style="font-size: 0.8rem; color: #764ba2;">Max Price: ₹${maxPrice.toLocaleString('en-IN')}</p>
+                            <div class="product-actions">
+                                <button class="buy-btn" style="background: #17a2b8;" onclick="handleEditProduct(${product.Product_ID})">Edit Max Price</button>
+                                <button class="bargain-btn" style="background: #dc3545;" onclick="handleDeleteProduct(${product.Product_ID})">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                productsHtml += '</div>';
+            }
+            
+            contentArea.innerHTML = productsHtml;
+        })
+        .catch(error => {
+            console.error('FETCH FAILURE:', error);
+            contentArea.innerHTML = `<p style="color:red;">❌ FETCH FAILED: See console for details on ${error.message}.</p>`;
+        });
+}
+
+// Add this function to your <script> block in index.html
+async function handleRejectOffer(offerId) {
+    if (!confirm(`Are you sure you want to REJECT Offer ID ${offerId}? This action cannot be undone.`)) {
+        return;
+    }
+
+    const messageBoxId = 'shopkeeperNotification';
+    showMessage(messageBoxId, `Processing rejection for Offer ID ${offerId}...`, 'error');
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/delete-offer/${offerId}`, {
+            method: 'DELETE',
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            showMessage(messageBoxId, data.message, 'success');
+            // Reload offers list immediately to show the offer is gone
+            loadShopkeeperOffers(); 
+        } else {
+            showMessage(messageBoxId, `Rejection Failed: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Reject Offer Error:', error);
+        showMessage(messageBoxId, 'Failed to connect to server for offer rejection.', 'error');
+    }
+}
+
+function loadShopkeeperOrders() {
+    const contentArea = document.getElementById('my-orders');
+    const currentUser = getUser();
+    
+    if (!currentUser || currentUser.role !== 'shopkeeper') return;
+    
+    contentArea.innerHTML = '<h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Customer Orders</h3><p>Loading orders...</p>';
+
+    fetch(`${API_BASE_URL}/shopkeeper/orders/${currentUser.id}`)
+        .then(response => response.json())
+        .then(orders => {
+            let ordersHtml = '';
+            if (!Array.isArray(orders) || orders.length === 0) {
+                ordersHtml = '<p>No orders have been placed for your products yet.</p>';
+            } else {
+                ordersHtml = orders.map(order => `
+                    <div class="delivery-card">
+                        <h4>Order ID: ${order.Order_ID} (Product ID: ${order.Product_ID})</h4>
+                        <p><strong>Product:</strong> ${order.Product_Name}</p>
+                        <p><strong>Customer:</strong> ${order.CustomerName}</p>
+                        <p><strong>Date:</strong> ${new Date(order.Order_Date).toLocaleDateString()}</p>
+                        <p><strong>Final Price:</strong> ₹${Number(order.Final_Price).toLocaleString('en-IN')}</p>
+                        <span class="status-badge status-delivered">Accepted/Paid</span>
+                    </div>
+                `).join('');
+            }
+            // Re-inject the header before the new content
+            contentArea.innerHTML = `<h3 style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Customer Orders</h3><div id="orderList">${ordersHtml}</div>`;
+        })
+        .catch(error => {
+            console.error('Error loading shopkeeper orders:', error);
+            contentArea.innerHTML = '<p style="color:red;">Failed to load orders. Check server connection.</p>';
+        });
+}
+
+
+    
+    function handleProductUpload(event) {
+        event.preventDefault();
+        
+        const currentUser = getUser();
+        const messageBoxId = 'uploadMessage';
+        
+        if (!currentUser || currentUser.role !== 'shopkeeper') {
+            showMessage(messageBoxId, 'You must be logged in as a shopkeeper.', 'error');
+            return;
+        }
+
+        const productId = document.getElementById('uploadProductId').value;
+        const productName = document.getElementById('uploadProductName').value;
+        const standardPrice = document.getElementById('uploadStandardPrice').value;
+        const minPrice = document.getElementById('uploadMinPrice').value;
+        const maxPrice = document.getElementById('uploadMaxPrice').value;
+        
+        if (Number(minPrice) > Number(standardPrice) || Number(standardPrice) > Number(maxPrice)) {
+            showMessage(messageBoxId, 'Price logic error: Min Price $\\leq$ Standard Price $\\leq$ Max Price.', 'error');
+            return;
+        }
+
+        showMessage(messageBoxId, 'Uploading product...', 'success');
+
+        fetch(`${API_BASE_URL}/shopkeeper/product`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                productId: parseInt(productId), 
+                productName, 
+                standardPrice: parseFloat(standardPrice), 
+                minPrice: parseFloat(minPrice), 
+                maxPrice: parseFloat(maxPrice), 
+                sellerId: currentUser.id 
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage(messageBoxId, data.message, 'success');
+                event.target.reset(); // Clear form
+                // Automatically switch to show the new product
+                setTimeout(() => {
+                    const productLink = document.querySelector('#shopkeeperDashboard .dashboard-nav a[onclick*="my-products"]');
+                    if (productLink) productLink.click();
+                }, 1000);
+            } else {
+                showMessage(messageBoxId, `Upload Failed: ${data.message}`, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Product upload error:', error);
+            showMessage(messageBoxId, 'Product upload failed. Check server status.', 'error');
+        });
+    }
+
+    // ------------------------------------------------------------------
+    // --- END: COMPLETED FUNCTIONS FOR BARGAIN MODAL AND UPLOAD ---
+    // ------------------------------------------------------------------
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('bargainModal');
+        if (event.target == modal) {
+            closeBargainModal();
+        }
+    }
+    
+    // Initial load check
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentUser = getUser();
+        if (currentUser) {
+            if (currentUser.role === 'customer') showPage('customerDashboard');
+            else if (currentUser.role === 'shopkeeper') showPage('shopkeeperDashboard');
+        } else {
+            showPage('homePage');
+        }
+    });
+
+    </script>
+
+</body>
+</html>
